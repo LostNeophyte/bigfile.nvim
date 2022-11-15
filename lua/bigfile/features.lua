@@ -45,8 +45,9 @@ feature("lsp", {
 })
 
 feature("treesitter", {
-  opts = { defer = true },
-  disable = function()
+  opts = { defer = false },
+  disable = function(bufnr)
+    vim.api.nvim_buf_set_var(bufnr, "bigfile_treesitter_disabled", 1)
     local ts_conf = require "nvim-treesitter.configs"
     local available_modules = ts_conf.available_modules()
     vim.cmd("TSBufDisable " .. unpack(available_modules))
